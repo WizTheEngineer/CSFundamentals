@@ -31,7 +31,7 @@ public class ArrayList<T> {
     
     public void add(T object) {
         if (numElements == capacity) {
-            doubleCapacity();
+            increaseCapacity();
         }
         
         elements[numElements] = object;
@@ -56,7 +56,7 @@ public class ArrayList<T> {
         return numElements;
     }
     
-    private void doubleCapacity() {
+    private void increaseCapacity() {
        capacity *= CAPACITY_MULTIPLIER;
        T[] newArray = (T[]) Array.newInstance(elementType, capacity);
        
