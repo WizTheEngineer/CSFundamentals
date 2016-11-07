@@ -5,8 +5,6 @@
  */
 package csfundamentals;
 
-import data_structures.ArrayList;
-
 /**
  *
  * @author Wayne
