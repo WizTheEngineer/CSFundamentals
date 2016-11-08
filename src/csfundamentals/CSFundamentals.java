@@ -5,6 +5,9 @@
  */
 package csfundamentals;
 
+import data_structures.Heap;
+import data_structures.Heap.Type;
+
 /**
  *
  * @author Wayne
@@ -16,6 +19,41 @@ public class CSFundamentals {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Heap heap = new Heap(Type.MIN);
+        heap.add(12);
+        heap.add(11);
+        heap.add(14);
+        heap.add(2);
+        heap.add(5);
+        heap.add(1);
+        heap.add(11);
+        heap.add(4);
+        heap.add(13);
+        heap.printValues();
+        heap.poll();
+        System.out.println("");
+        heap.printValues();
+        heap.poll();
+        System.out.println("");
+        heap.printValues();
+        heap.poll();
+        System.out.println("");
+        heap.printValues();
+        heap.poll();
+        System.out.println("");
+        heap.printValues();
+        heap.poll();
+        System.out.println("");
+        heap.printValues();
+        heap.poll();
+        System.out.println("");
+        heap.printValues();
+        heap.poll();
+        System.out.println("");
+        heap.printValues();
+        heap.poll();
+        System.out.println("");
+        heap.printValues();
     }
     
 }

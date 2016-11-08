@@ -4,169 +4,186 @@
  * and open the template in the editor.
  */
 package data_structures;
-import java.util.ArrayList;
+
+import java.util.Arrays;
 
 /**
  *
  * @author Wayne
+ * Implementation of a heap where you can specify the type using the constructor.
  */
 public class Heap {
+    private static Type DEFAULT_TYPE = Type.MIN;
+    private int capacity = 10;
+    private int size = 0;
+    private Type type;
     
-    private static final HeapType DEFAULT_TYPE = HeapType.MAX;
-    
-    private final ArrayList<Integer> elements;
-    private final HeapType type;
-    private int size;
+    int[] items = new int[capacity];
     
     public Heap() {
-        elements = new java.util.ArrayList();
         type = DEFAULT_TYPE;
     }
     
-    public Heap(HeapType type) {
-        elements = new java.util.ArrayList();
+    public Heap(Type type) {
         this.type = type;
     }
     
-    public void add(int value) {
-        elements.add(value);
+    public int peek() {
+        if (size == 0) throw new IllegalStateException();
+        return items[0];
+    }
+    
+    public int poll() {
+        if (size == 0) throw new IllegalStateException();
+        int item = items[0];
+        items[0] = items[size - 1];
+        size--;
+        heapifyDown();
+        return item;
+    }
+    
+    public void add(int item) {
+        ensureExtraCapacity();
+        items[size] = item;
         size++;
+        heapifyUp();
+    }
+    
+    private void heapifyDown() {
+        int index = 0;
         
-        // No need to sort because this is the first element added
-        if (size == 1) return;
-        
-        int index = size - 1;
-        int parentIndex = getParentIndex(index);
-        int parentValue = elements.get(getParentIndex(index));
-        
-        while(childShouldBeSwappedWithParent(value, parentValue)) {
-            swapChildWithParent(index, value, parentIndex, parentValue);
-            index = parentIndex;
-            parentIndex = getParentIndex(index);
-            parentValue = elements.get(parentIndex);
+        while(shouldSwapDown(index)) {
+            int swapDownIndex = getSwapDownIndex(index);
+            swap(index, swapDownIndex);
+            index = swapDownIndex;
         }
     }
     
-    public int remove() {
-        int index = 0;
-        int value = elements.get(index);
-        if (size == 1) {
-            size--;
-            elements.remove(index);
-            return value;
-        }
+    private boolean shouldSwapDown(int index) {
+        int item = items[index];
         
-        // Replace value with furthest leaf node
-        int replacementValue = elements.get(size - 1);
-        elements.remove(size - 1);
-        elements.remove(0);
-        elements.add(0, replacementValue);
-        size--;
-        
-        // Check if the replacement is in the right place
-        while(elementShouldBeSwappedWithOneOfChildren(index)) {
-            int leftIndex = getLeftChildIndex(index);
-            int leftElement = elements.get(leftIndex);
-            if (!hasTwoChildren(index)) {
-                swapChildWithParent(leftIndex, leftElement, index, replacementValue);
-                index = leftIndex;
-            } else {
-                // Since this node has two children determine which one it should swap with
-                int rightIndex = getRightChildIndex(index);
-                int rightElement = elements.get(rightIndex);
+        if (hasLeftChild(index)) {
+            int leftChild = leftChild(index);
+            
+            if (hasRightChild(index)) {
+                int rightChild = rightChild(index);
                 
-                if (type == HeapType.MIN) {
-                    if (leftElement <= rightElement) {
-                        // Swap them
-                        swapChildWithParent(leftIndex, leftElement, index, replacementValue);
-                        index = leftIndex;
-                    } else {
-                        // Swap them
-                        swapChildWithParent(rightIndex, rightElement, index, replacementValue);
-                        index = rightIndex;
-                    }
-                } else {
-                    if (leftElement >= rightElement) {
-                        // Swap them
-                        swapChildWithParent(leftIndex, leftElement, index, replacementValue);
-                        index = leftIndex;
-                    } else {
-                        // Swap them
-                        swapChildWithParent(rightIndex, rightElement, index, replacementValue);
-                        index = rightIndex;
-                    }
+                if (type == Type.MIN) {
+                    return Math.min(leftChild, rightChild) < item;
+                } else  {
+                    return Math.max(leftChild, rightChild) > item;
                 }
             }
-        }
-        return value;
-    }
-    
-    private boolean elementShouldBeSwappedWithOneOfChildren(int index) {
-        int value = elements.get(index);
-        if (hasTwoChildren(index)) {
-            int leftIndex = getLeftChildIndex(index);
-            int rightIndex = getRightChildIndex(index);
-            int leftElement = elements.get(leftIndex);
-            int rightElement = elements.get(rightIndex);
-                
-            return childShouldBeSwappedWithParent(leftElement, value) ||
-                       childShouldBeSwappedWithParent(rightElement, value);
-        } else if (hasLeftChild(index)) {
-            int leftIndex = getLeftChildIndex(index);
-            int leftElement = elements.get(leftIndex);
-            return childShouldBeSwappedWithParent(leftElement, value);
+            
+            if (type == Type.MIN) {
+                return leftChild < item;
+            } else {
+                return leftChild > item;
+            }
         }
         return false;
     }
     
-    private boolean hasTwoChildren(int index) {
-        return hasLeftChild(index) && hasRightChild(index);
-    }
-    
-    private boolean hasLeftChild(int index) {
-        return getLeftChildIndex(index) < size;
-    }
-    
-    private boolean hasRightChild(int index) {
-        return getRightChildIndex(index) < size;
-    }
-    
-    private boolean childShouldBeSwappedWithParent(int childValue, int parentValue) {
-        if (type == HeapType.MIN) {
-            return childValue < parentValue;
+    private int getSwapDownIndex(int index) {
+        int leftChild = leftChild(index);
+            
+        if (hasRightChild(index)) {
+            int rightChild = rightChild(index);
+            if (type == Type.MIN) {
+                if (rightChild < leftChild) {
+                    return getRightChildIndex(index);
+                }
+            } else  {
+                if (rightChild > leftChild) {
+                    return getRightChildIndex(index);
+                }
+            }
         }
-        return childValue > parentValue;
+        return getLeftChildIndex(index);
     }
     
-    private void swapChildWithParent(int childIndex, int childValue, int parentIndex, int parentValue) {
-        elements.remove(childIndex);
-        elements.add(childIndex, parentValue);
-        elements.remove(parentIndex);
-        elements.add(parentIndex, childValue);
+    private void heapifyUp() {
+        int index = size - 1;
+        
+        while (shouldSwapWithParent(index)) {
+            int parentIndex = getParentIndex(index);
+            swap(index, parentIndex);
+            index = parentIndex;
+        }
     }
     
-    private int getLeftChildIndex(int parentIndex) {
+    private boolean shouldSwapWithParent(int index) {
+        int item = items[index];
+        if (hasParent(index)) {
+            int parent = parent(index);
+            
+            if (type == Type.MIN) {
+                return item < parent;
+            } else {
+                return item > parent;
+            }
+        }
+        
+        return false;
+    }
+    
+    private int getLeftChildIndex(int parentIndex) { 
         return 2 * parentIndex + 1;
     }
     
-    private int getRightChildIndex(int parentIndex) {
+    private int getRightChildIndex(int parentIndex) { 
         return 2 * parentIndex + 2;
     }
     
-    private int getParentIndex(int childIndex) {
-        if (childIndex > 0) {
-            return (int) Math.floor((childIndex - 1) / 2);
+    private int getParentIndex(int childIndex) { 
+        return (childIndex - 1) / 2; 
+    }
+    
+    private boolean hasLeftChild(int index) { 
+        return getLeftChildIndex(index) < size; 
+    }
+    
+    private boolean hasRightChild(int index) { 
+        return getRightChildIndex(index) < size; 
+    }
+    
+    private boolean hasParent(int index) { 
+        return getParentIndex(index) >= 0; 
+    }
+    
+    private int leftChild(int index) { 
+        return items[getLeftChildIndex(index)];
+    }
+    
+    private int rightChild(int index) {
+        return items[getRightChildIndex(index)];
+    }
+    
+    private int parent(int index) {
+        return items[getParentIndex(index)];
+    }
+    
+    private void swap(int indexOne, int indexTwo) {
+        int temp = items[indexOne];
+        items[indexOne] = items[indexTwo];
+        items[indexTwo] = temp;
+    }
+    
+    private void ensureExtraCapacity() {
+        if (size == capacity) {
+            items = Arrays.copyOf(items, capacity * 2);
+            capacity *= 2;
         }
-        return 0;
     }
     
     public void printValues() {
         for (int i = 0; i < size; i++) {
-            System.out.print(" | " + elements.get(i) + " | ");
+            int item = items[i];
+            System.out.print(" | " + item + " | ");
         }
     }
     
-      public enum HeapType {
+    public static enum Type {
         MIN,
         MAX
     }
