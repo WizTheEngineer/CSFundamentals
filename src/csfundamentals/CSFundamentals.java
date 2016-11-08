@@ -7,6 +7,7 @@ package csfundamentals;
 
 import data_structures.Heap;
 import data_structures.Heap.Type;
+import data_structures.Trie;
 
 /**
  *
@@ -19,6 +20,10 @@ public class CSFundamentals {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        executeTrieExample();
+    }
+    
+    private static void executeHeapExample() {
         Heap heap = new Heap(Type.MIN);
         heap.add(12);
         heap.add(11);
@@ -54,6 +59,28 @@ public class CSFundamentals {
         heap.poll();
         System.out.println("");
         heap.printValues();
+    }
+    
+    private static void executeTrieExample() {
+        Trie trie = new Trie();
+        trie.addWord("Wayne");
+        trie.addWord("Worry");
+        trie.addWord("Wallie");
+        trie.addWord("Brandi");
+        trie.addWord("Brittney");
+        trie.addWord("Brand");
+        
+        if (trie.containsWord("Wow")) {
+            System.out.println("The trie contains Wow");
+        } else {
+            System.out.println("The trie doesn't contain Wow");
+        }
+        
+        if (trie.containsWord("Brandi")) {
+            System.out.println("This trie contains Brandi");
+        } else {
+            System.out.println("The trie doesn't contain Brandi");
+        }
     }
     
 }
