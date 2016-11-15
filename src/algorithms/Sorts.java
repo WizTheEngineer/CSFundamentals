@@ -15,17 +15,13 @@ public class Sorts {
     /**
      * Merge sort algorithm.
      * @param array
-     * @return 
      */
-    public int[] mergeSort(int[] array) {
+    public void mergeSort(int[] array) {
         mergeSort(array, new int[array.length], 0, array.length - 1);
-        return array;
     }
     
     private void mergeSort(int[] array, int[] temp, int left, int right) {
-        if (left >= right) {
-            return;
-        }
+        if (left >= right) return;
         
         // Prevents integer overflow by not using (left + right) / 2 because left + right can cause an integer overflow
         int mid = left + ((right - left) / 2);
