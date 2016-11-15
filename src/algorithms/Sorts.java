@@ -15,6 +15,8 @@ public class Sorts {
     /**
      * Merge sort algorithm.
      * @param array
+     * Time Complexity: O(nlogn)
+     * Space Complexity: O(n)
      */
     public void mergeSort(int[] array) {
         mergeSort(array, new int[array.length], 0, array.length - 1);
@@ -66,8 +68,10 @@ public class Sorts {
     }
     
     /**
-     * Quick sort algorithm
+     * Quick sort algorithm.
      * @param array 
+     * Time Complexity : Worst(O(n^2)) Average(O(nlogn))
+     * Space Complexity : O(1)
      */
     public void quickSort(int[] array) {
         quickSort(array, 0, array.length - 1);
