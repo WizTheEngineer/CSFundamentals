@@ -5,9 +5,7 @@
  */
 package csfundamentals;
 
-import data_structures.Heap;
-import data_structures.Heap.Type;
-import data_structures.Trie;
+import algorithms.Sorts;
 
 /**
  *
@@ -20,5 +18,17 @@ public class CSFundamentals {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Sorts sorts = new Sorts();
+        int[] array = {7, 5, 2, 8, 1, 9, 4, 7, 2, 3, 6};
+        printArray(array);
+        sorts.quickSort(array);
+        printArray(array);
+    }
+    
+    private static void printArray(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            System.out.printf("| %d |", array[i]);
+        }
+        System.out.println();
     }
 }
