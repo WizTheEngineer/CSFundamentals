@@ -5,7 +5,7 @@
  */
 package csfundamentals;
 
-import algorithms.Sorts;
+import data_structures.AVLTree;
 
 /**
  *
@@ -18,17 +18,15 @@ public class CSFundamentals {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Sorts sorts = new Sorts();
-        int[] array = {7, 5, 2, 8, 1, 9, 4, 7, 2, 3, 6};
-        printArray(array);
-        sorts.quickSort(array);
-        printArray(array);
-    }
-    
-    private static void printArray(int[] array) {
-        for (int i = 0; i < array.length; i++) {
-            System.out.printf("| %d |", array[i]);
-        }
-        System.out.println();
+        AVLTree avlTree = new AVLTree();
+        avlTree.insert(1);
+        avlTree.insert(2);
+        avlTree.insert(3);
+        avlTree.insert(4);
+        avlTree.insert(5);
+        avlTree.insert(6);
+        avlTree.insert(7);
+        avlTree.insert(17);
+        avlTree.printInorder();
     }
 }
