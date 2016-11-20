@@ -18,15 +18,19 @@ public class CSFundamentals {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        AVLTree avlTree = new AVLTree();
-        avlTree.insert(1);
-        avlTree.insert(2);
-        avlTree.insert(3);
-        avlTree.insert(4);
-        avlTree.insert(5);
-        avlTree.insert(6);
-        avlTree.insert(7);
+        AVLTree<Integer> avlTree = new AVLTree();
+        avlTree.insert(25);
+        avlTree.insert(12);
         avlTree.insert(17);
+        avlTree.insert(15);
+        avlTree.insert(10);
+        avlTree.insert(20);
+        avlTree.insert(8);
+        avlTree.insert(6);
+        avlTree.insert(11);
+        avlTree.insert(16);
+        avlTree.insert(27);
         avlTree.printInorder();
+        avlTree.printPretty();
     }
 }
