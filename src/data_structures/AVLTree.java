@@ -20,10 +20,12 @@ public class AVLTree<T> {
 
         private final T data;
         private int height;
+        private AVLNode<T> parent;
         private AVLNode<T> left;
         private AVLNode<T> right;
 
-        private AVLNode(T data) {
+        private AVLNode(AVLNode<T> parent, T data) {
+            this.parent = parent;
             this.data = data;
             height = 1;
         }
@@ -45,19 +47,19 @@ public class AVLTree<T> {
     }
 
     public void insert(T value) {
-        root = insert(root, value);
+        root = insert(null, root, value);
     }
 
-    private AVLNode<T> insert(AVLNode<T> node, T value) {
+    private AVLNode<T> insert(AVLNode<T> parent, AVLNode<T> node, T value) {
         if (node == null) {
-            node = new AVLNode(value);
+            node = new AVLNode(parent, value);
             return node;
         } else {
-            int k = ((Comparable) node.data).compareTo(value);
-            if (k > 0) {
-                node.left = insert(node.left, value);
+            int comparisonResult = ((Comparable) node.data).compareTo(value);
+            if (comparisonResult > 0) {
+                node.left = insert(node, node.left, value);
             } else {
-                node.right = insert(node.right, value);
+                node.right = insert(node, node.right, value);
             }
             node.height = Math.max(height(node.left), height(node.right)) + 1;
             int heightDiff = heightDiff(node);
@@ -80,11 +82,59 @@ public class AVLTree<T> {
         }
         return node;
     }
+    
+    public T successor(T value) {
+        return successor(root, value);
+    }
+    
+    private T successor(AVLNode<T> node, T value) {
+        if (node == null) {
+            return null;
+        }
+        
+        int comparisonValue = ((Comparable) node.data).compareTo(value);
+        if (comparisonValue > 0) {
+            return successor(node.left, value);
+        } else if (comparisonValue < 0) {
+            return successor(node.right, value);
+        } else {
+            if (node.right == null && node.parent == null) {
+                return null;
+            }
+            if (node.right != null) {
+                // Return the left-most child of the right subtree
+                AVLNode<T> next = node.right;
+                while(next.left != null) {
+                    next = next.left;
+                }
+                return next.data;
+            } else {
+                AVLNode<T> next = node.parent;
+                while(next != null) {
+                    int comparison = ((Comparable) next.data).compareTo(value);
+                    if (comparison > 0) {
+                        return next.data;
+                    }
+                    next = next.parent;
+                }
+                return null;
+            }
+        }
+    }
 
     private AVLNode<T> leftRotate(AVLNode<T> n) {
         AVLNode<T> r = n.right;
         n.right = r.left;
+        if (r.left != null) {
+            r.left.parent = n;
+        }
         r.left = n;
+        r.parent = n.parent;
+        n.parent = r;
+        
+        if (r.parent == null) {
+            root = r;
+        }
         n.height = Math.max(height(n.left), height(n.right)) + 1;
         r.height = Math.max(height(r.left), height(r.right)) + 1;
         return r;
@@ -93,7 +143,16 @@ public class AVLTree<T> {
     private AVLNode<T> rightRotate(AVLNode<T> n) {
         AVLNode<T> r = n.left;
         n.left = r.right;
+        if (r.right != null) {
+            r.right.parent = n;
+        }
         r.right = n;
+        r.parent = n.parent;
+        n.parent = r;
+        
+        if (r.parent == null) {
+            root = r;
+        }
         n.height = Math.max(height(n.left), height(n.right)) + 1;
         r.height = Math.max(height(r.left), height(r.right)) + 1;
         return r;

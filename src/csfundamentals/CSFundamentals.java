@@ -27,10 +27,22 @@ public class CSFundamentals {
         avlTree.insert(20);
         avlTree.insert(8);
         avlTree.insert(6);
+        avlTree.insert(28);
         avlTree.insert(11);
         avlTree.insert(16);
         avlTree.insert(27);
-        avlTree.printInorder();
         avlTree.printPretty();
+        printSuccessors(avlTree);
+        
+    }
+    
+    private static void printSuccessors(AVLTree avlTree) {
+        for (int i = 0; i < 30; i++) {
+            int value = i;
+            
+            if (avlTree.successor(value) != null) {
+                System.out.printf("Successor to %d is %d\n", value, avlTree.successor(value));
+            }
+        }
     }
 }
