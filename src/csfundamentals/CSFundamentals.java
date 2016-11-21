@@ -26,8 +26,8 @@ public class CSFundamentals {
         avlTree.insert(40);
         avlTree.insert(11);
         avlTree.insert(-29);
-        printMax(avlTree);
-        printMin(avlTree);
+        avlTree.printPostorder();
+        avlTree.printPretty();
         
         
     }

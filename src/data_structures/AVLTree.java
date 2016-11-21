@@ -235,6 +235,34 @@ public class AVLTree<T> {
         printInorder(node.right);
     }
     
+    public void printPreorder() {
+        printPreorder(root);
+    }
+    
+    private void printPreorder(AVLNode node) {
+        if (node == null) {
+            return;
+        }
+        
+        System.out.println(node.getText());
+        printPreorder(node.left);
+        printPreorder(node.right);
+    }
+    
+    public void printPostorder() {
+        printPostorder(root);
+    }
+    
+    private void printPostorder(AVLNode node) {
+        if (node == null) {
+            return;
+        }
+        
+        printPostorder(node.left);
+        printPostorder(node.right);
+        System.out.println(node.getText());
+    }
+    
     public void printPretty() {
         TreePrinter.print(root);
     }
