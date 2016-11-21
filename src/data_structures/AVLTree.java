@@ -121,6 +121,53 @@ public class AVLTree<T> {
             }
         }
     }
+    
+    public T predecessor(T value) {
+        return predecessor(root, value);
+    }
+    
+    private T predecessor(AVLNode<T> node, T value) {
+        if (node == null) {
+            return null;
+        }
+        
+        int comparisonValue = ((Comparable) node.data).compareTo(value);
+        if (comparisonValue > 0) {
+            return predecessor(node.left, value);
+        } else if (comparisonValue < 0) {
+            return predecessor(node.right, value);
+        } else {
+            if (node.left != null) {
+                // Return the right-most element of the left subtree
+                AVLNode<T> next = node.left;
+                while (next.right != null) {
+                    next = next.right;
+                }
+                return next.data;
+            } else if (node.parent != null) {
+                
+                AVLNode<T> next = node.parent;
+                if (node.parent.left != null && node.parent.left.equals(node)) {
+                    // This node is a left child of it's parent and doesn't have
+                    while (next != null) {
+                        int comparison = ((Comparable) next.data).compareTo(node.data);
+                        if (comparison > 0) {
+                            next = next.parent;
+                        } else {
+                            return next.data;
+                        }
+                    }
+                    return null;
+                } else {
+                    // This node is greater than it's parent and doesn't have
+                    // a left subtree so return the parents data
+                    return next.data;
+                }
+            } else {
+                return null;
+            }
+        }
+    }
 
     private AVLNode<T> leftRotate(AVLNode<T> n) {
         AVLNode<T> r = n.right;

@@ -31,7 +31,7 @@ public class CSFundamentals {
         avlTree.insert(11);
         avlTree.insert(16);
         avlTree.insert(27);
-        avlTree.printPretty();
+        printPredecessors(avlTree);
         printSuccessors(avlTree);
         
     }
@@ -42,6 +42,16 @@ public class CSFundamentals {
             
             if (avlTree.successor(value) != null) {
                 System.out.printf("Successor to %d is %d\n", value, avlTree.successor(value));
+            }
+        }
+    }
+    
+    private static void printPredecessors(AVLTree avlTree) {
+        for (int i = 30; i >= 0; i--) {
+            int value = i;
+            
+            if (avlTree.predecessor(value) != null) {
+                System.out.printf("Predecessor to %d is %d\n", value, avlTree.predecessor(value));
             }
         }
     }
