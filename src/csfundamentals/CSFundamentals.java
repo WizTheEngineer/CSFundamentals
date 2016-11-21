@@ -19,21 +19,25 @@ public class CSFundamentals {
     public static void main(String[] args) {
         // TODO code application logic here
         AVLTree<Integer> avlTree = new AVLTree();
-        avlTree.insert(25);
-        avlTree.insert(12);
-        avlTree.insert(17);
-        avlTree.insert(15);
         avlTree.insert(10);
-        avlTree.insert(20);
-        avlTree.insert(8);
-        avlTree.insert(6);
-        avlTree.insert(28);
+        avlTree.insert(15); 
+        avlTree.insert(5);
+        avlTree.insert(13);
+        avlTree.insert(40);
         avlTree.insert(11);
-        avlTree.insert(16);
-        avlTree.insert(27);
-        printPredecessors(avlTree);
-        printSuccessors(avlTree);
+        avlTree.insert(-29);
+        printMax(avlTree);
+        printMin(avlTree);
         
+        
+    }
+    
+    private static void printMax(AVLTree avlTree) {
+        System.out.println("The max value of the tree is " + avlTree.findMax());
+    }
+    
+    private static void printMin(AVLTree avlTree) {
+        System.out.println("The minimum of the tree is " + avlTree.findMin());
     }
     
     private static void printSuccessors(AVLTree avlTree) {

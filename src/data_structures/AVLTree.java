@@ -18,7 +18,7 @@ public class AVLTree<T> {
 
     private static class AVLNode<T> implements PrintableNode {
 
-        private final T data;
+        private T data;
         private int height;
         private AVLNode<T> parent;
         private AVLNode<T> left;
@@ -61,26 +61,29 @@ public class AVLTree<T> {
             } else {
                 node.right = insert(node, node.right, value);
             }
-            node.height = Math.max(height(node.left), height(node.right)) + 1;
-            int heightDiff = heightDiff(node);
-            if (heightDiff < -1) {
-                if (heightDiff(node.right) > 0) {
-                    node.right = rightRotate(node.right);
-                    return leftRotate(node);
-                } else {
-                    return leftRotate(node);
-                }
-            } else if (heightDiff > 1) {
-                if (heightDiff(node.left) < 0) {
-                    node.left = leftRotate(node.left);
-                    return rightRotate(node);
-                } else {
-                    return rightRotate(node);
-                }
-            } else;
-
+            return balanceTree(node);
         }
-        return node;
+    }
+    
+    private AVLNode<T> balanceTree(AVLNode<T> node) {
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        int heightDiff = heightDiff(node);
+        if (heightDiff < -1) {
+            if (heightDiff(node.right) > 0) {
+                node.right = rightRotate(node.right);
+                return leftRotate(node);
+            } else {
+                return leftRotate(node);
+            }
+        } else if (heightDiff > 1) {
+            if (heightDiff(node.left) < 0) {
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            } else {
+                return rightRotate(node);
+            }
+        }
+        return node;    
     }
     
     public T successor(T value) {
@@ -234,5 +237,43 @@ public class AVLTree<T> {
     
     public void printPretty() {
         TreePrinter.print(root);
+    }
+    
+    public T findMin() {
+        AVLNode<T> minNode = findMin(root);
+        if (minNode != null) {
+            return minNode.data;
+        }
+        return null;
+    }
+
+    private AVLNode<T> findMin(AVLNode<T> node) {
+        if (node == null) {
+            return null;
+        }
+        
+        if (node.left != null) {
+            return findMin(node.left);
+        }
+        return node;
+    }
+    
+    public T findMax() {
+        AVLNode<T> maxNode = findMax(root);
+        if (maxNode != null) {
+            return maxNode.data;
+        }
+        return null;
+    }
+    
+    private AVLNode<T> findMax(AVLNode<T> node) {
+        if (node == null) {
+            return null;
+        }
+        
+        if (node.right != null) {
+            return findMax(node.right);
+        }
+        return node;
     }
 }
