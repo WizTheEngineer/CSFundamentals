@@ -50,4 +50,22 @@ public class LinkedList<T> {
             current = current.next;
         }
     }
+    
+    public Node getHead() {
+        return head;
+    }
+    
+    public boolean isEmpty() {
+        return head == null;
+    }
+    
+    public void print() {
+        if (isEmpty()) return;
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
 }
