@@ -7,6 +7,7 @@ package ctcisolutions;
 
 import data_structures.LinkedList;
 import data_structures.Node;
+import data_structures.Stack;
 import java.util.HashSet;
 
 /**
@@ -209,5 +210,50 @@ public class LinkedLists {
             output.append(1);
         }
         return output;
+    }
+    
+    // # 6 Is Palindrome?
+    public static boolean isPalindrome(LinkedList<Character> list) {
+        if (list.isEmpty()) return true;
+        
+        // Calculate the length of the list
+        int length = 0;
+        Node<Character> current = list.getHead();
+        while (current != null) {
+            current = current.next;
+            length++;
+        }
+        
+        // Single element is always a palindrome
+        if (length == 1) return true;
+        
+        // Check if odd or even
+        boolean isEvenLength = length % 2 == 0;
+        int firstEnd = length / 2;
+        
+        // If the length is odd skip the middle element
+        int secondStart = isEvenLength ? firstEnd + 1 : firstEnd + 2;
+        
+        Stack<Character> charStack = new Stack();
+        
+        // Start at the beginning
+        int counter = 1;
+        current = list.getHead();
+        while (current != null) {
+            if (counter <= firstEnd) {
+                // Push the first half to a stack
+                charStack.push(current.data);
+            } else if (counter >= secondStart) {
+                // Pop characters from stack and compare
+                char c = charStack.pop();
+                if (c != current.data) {
+                    return false;
+                }
+            }
+            current = current.next;
+            counter++;
+        }
+        
+        return true;
     }
 }

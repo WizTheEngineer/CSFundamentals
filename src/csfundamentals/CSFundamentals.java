@@ -5,6 +5,9 @@
  */
 package csfundamentals;
 
+import ctcisolutions.LinkedLists;
+import data_structures.LinkedList;
+
 /**
  *
  * @author Wayne
