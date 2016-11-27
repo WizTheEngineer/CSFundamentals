@@ -13,12 +13,12 @@ public class LinkedList<T> {
     
     public Node<T> head;
     
-    public void append(T data) {
+    public Node<T> append(T data) {
         Node newNode = new Node(data);
         
         if (head == null) {
             head = newNode;
-            return;
+            return head;
         }
         
         Node current = head;
@@ -26,12 +26,14 @@ public class LinkedList<T> {
             current = current.next;
         }
         current.next = newNode;
+        
+        return newNode;
     }
     
-    public void append(Node<T> node) {
+    public Node<T> append(Node<T> node) {
         if (head == null) {
             head = node;
-            return;
+            return head;
         }
         
         Node current = head;
@@ -39,6 +41,7 @@ public class LinkedList<T> {
             current = current.next;
         }
         current.next = node;
+        return node;
     }
     
     public void prepend(T data) {

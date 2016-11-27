@@ -27,8 +27,9 @@ public class CSFundamentals {
         
         list.append(node1);
         list.append(node2);
+        list.append(node1);
         
-        boolean listHasLoop = LinkedLists.hasLoop(list);
-        System.out.printf("List has loop %b\n", listHasLoop);
+        Node listHasLoop = LinkedLists.hasLoop(list);
+        System.out.println("List has loop at node " + listHasLoop);
     }
 }
