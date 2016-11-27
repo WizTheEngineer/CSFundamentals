@@ -11,7 +11,7 @@ package data_structures;
  */
 public class LinkedList<T> {
     
-    private Node<T> head;
+    public Node<T> head;
     
     public void append(T data) {
         Node newNode = new Node(data);
