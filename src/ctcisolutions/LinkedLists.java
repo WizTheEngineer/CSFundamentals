@@ -43,7 +43,7 @@ public class LinkedLists {
     }
 
     private static void removeDuplicates(Node<Integer> head) {
-        Integer data = head.data;
+        int data = head.data;
         while (head != null && head.next != null) {
             if (head.next.data == data) {
                 head.next = head.next.next;
