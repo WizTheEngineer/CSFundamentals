@@ -258,9 +258,9 @@ public class LinkedLists {
         return true;
     }
     
-    // #8 Loop Detection
-    public static Node hasLoop(LinkedList list) {
-        if (list.isEmpty()) return null;
+    // #7 Loop Detection
+    public static boolean hasLoop(LinkedList list) {
+        if (list.isEmpty()) return false;
         Node slow = list.getHead();
         Node fast = list.getHead();
         
@@ -269,11 +269,10 @@ public class LinkedLists {
             fast = fast.next.next;
             
             if (slow == fast) {
-                // Return either one
-                return slow;
+                return true;
             }
         }
         
-        return null;
+        return false;
     }
 }
