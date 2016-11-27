@@ -216,7 +216,7 @@ public class LinkedLists {
     public static boolean isPalindrome(LinkedList<Character> list) {
         if (list.isEmpty()) return true;
         
-        // Calculate the length of the list
+        // Calculate the length of the list (Note: This could be improved if the list keeps track of the length)
         int length = 0;
         Node<Character> current = list.getHead();
         while (current != null) {
@@ -231,9 +231,10 @@ public class LinkedLists {
         boolean isEvenLength = length % 2 == 0;
         int firstEnd = length / 2;
         
-        // If the length is odd skip the middle element
+        // If the length is odd skip the middle element since it doesn't matter
         int secondStart = isEvenLength ? firstEnd + 1 : firstEnd + 2;
         
+        // This stack will be used to solve the problem
         Stack<Character> charStack = new Stack();
         
         // Start at the beginning
@@ -255,5 +256,23 @@ public class LinkedLists {
         }
         
         return true;
+    }
+    
+    // #8 Loop Detection
+    public static boolean hasLoop(LinkedList list) {
+        if (list.isEmpty()) return false;
+        Node slow = list.getHead();
+        Node fast = list.getHead();
+        
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            
+            if (slow == fast) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
