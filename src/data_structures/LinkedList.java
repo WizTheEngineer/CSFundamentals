@@ -28,6 +28,19 @@ public class LinkedList<T> {
         current.next = newNode;
     }
     
+    public void append(Node<T> node) {
+        if (head == null) {
+            head = node;
+            return;
+        }
+        
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = node;
+    }
+    
     public void prepend(T data) {
         Node newNode = new Node(data);
         newNode.next = head;
