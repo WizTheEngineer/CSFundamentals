@@ -6,6 +6,7 @@
 package csfundamentals;
 
 import ctcisolutions.LinkedLists;
+import ctcisolutions.StacksAndQueues.ArrayThreeStack;
 import data_structures.LinkedList;
 import data_structures.Node;
 
@@ -19,18 +20,21 @@ public class CSFundamentals {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        LinkedList<Integer> list = new LinkedList();
-        Node<Integer> node1 = new Node(1);
-        Node<Integer> node2 = new Node(2);
-        Node<Integer> node3 = new Node(3);
-        Node<Integer> node4 = new Node(4);
+        ArrayThreeStack<Integer> threeStack = new ArrayThreeStack<>(Integer.class, 300);
+        threeStack.push(1, 20);
+        threeStack.push(1, 30);
+        threeStack.push(2, 30);
+        threeStack.push(1, 40);
+        threeStack.push(3, 20);
+        threeStack.push(2, 50);
+        threeStack.pop(3);
         
-        list.append(node1);
-        list.append(node2);
-        list.append(node3);
-        list.append(node4);
-        list.append(node1);
-        
-        Node loopStartingNode = LinkedLists.getLoopStart(list);
+        for (int i = 1; i <= 3; i++) {
+            System.out.println("Elements for stack: " + i);
+            while (!threeStack.isEmpty(i)) {
+                System.out.print(threeStack.pop(i) + " ");
+            }
+            System.out.println();
+        }
     }
 }

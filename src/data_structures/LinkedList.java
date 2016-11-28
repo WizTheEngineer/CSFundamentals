@@ -8,6 +8,7 @@ package data_structures;
 /**
  *
  * @author Wayne
+ * @param <T>
  */
 public class LinkedList<T> {
     
