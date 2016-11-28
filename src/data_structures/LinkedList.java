@@ -68,7 +68,7 @@ public class LinkedList<T> {
         }
     }
     
-    public Node getHead() {
+    public Node<T> getHead() {
         return head;
     }
     
