@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/Wayne/development/java/CSFundamentals/src/ctcisolutions/LinkedLists.java</file>
-            <file>file:/Users/Wayne/development/java/CSFundamentals/src/data_structures/LinkedList.java</file>
-            <file>file:/Users/Wayne/development/java/CSFundamentals/src/data_structures/Node.java</file>
+            <file>file:/Users/Wayne/development/java/CSFundamentals/src/ctcisolutions/TreesAndGraphs.java</file>
+            <file>file:/Users/Wayne/development/java/CSFundamentals/src/data_structures/Graph.java</file>
+            <file>file:/Users/Wayne/development/java/CSFundamentals/src/data_structures/AVLTree.java</file>
             <file>file:/Users/Wayne/development/java/CSFundamentals/src/csfundamentals/CSFundamentals.java</file>
+            <file>file:/Users/Wayne/development/java/CSFundamentals/src/data_structures/BinarySearchTree.java</file>
+            <file>file:/Users/Wayne/development/java/CSFundamentals/src/data_structures/Queue.java</file>
         </group>
     </open-files>
 </project-private>
