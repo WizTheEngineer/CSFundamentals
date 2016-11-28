@@ -5,12 +5,16 @@
  */
 package ctcisolutions;
 
-import data_structures.AVLTree;
-import data_structures.BinarySearchTree;
+import data_structures.BST;
+import data_structures.BST.BinaryNode;
 import data_structures.Graph.GraphNode;
+import data_structures.LinkedList;
 import data_structures.Node;
 import data_structures.Queue;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -45,13 +49,13 @@ public class TreesAndGraphs {
     }
     
     // #2 Binary Search Tree Minimal Height Sorted Array
-    public static BinarySearchTree<Integer> buildMinimalTree(int[] sortedArray) {
-        BinarySearchTree<Integer> tree = new BinarySearchTree();
+    public static BST<Integer> buildMinimalTree(int[] sortedArray) {
+        BST<Integer> tree = new BST();
         buildMinimalTree(tree, sortedArray, 0, sortedArray.length - 1);
         return tree;
     }
     
-    private static void buildMinimalTree(BinarySearchTree<Integer> tree, int[] sortedArray, int start, int end) {
+    private static void buildMinimalTree(BST<Integer> tree, int[] sortedArray, int start, int end) {
         if (start > end) {
             return;
         }
@@ -61,5 +65,40 @@ public class TreesAndGraphs {
         tree.insert(sortedArray[middleIndex]);
         buildMinimalTree(tree, sortedArray, start, middleIndex - 1);
         buildMinimalTree(tree, sortedArray, middleIndex + 1, end);
+    }
+    
+    // #3 List of Depths
+    public static List<LinkedList<BinaryNode>> listOfDepths(BST tree) {
+        if (tree.isEmpty()) throw new IllegalArgumentException("Tree cannot be empty");
+        
+        // Maps
+        HashMap<Integer, List<BinaryNode>> levelMap = new HashMap();
+        
+        // Build the level map
+        buildLevelMap(tree.getRoot(), levelMap, 1);
+        
+        List<LinkedList<BinaryNode>> listOfDepths = new ArrayList();
+        
+        for (int key : levelMap.keySet()) {
+            LinkedList<BinaryNode> depthList = new LinkedList();
+            List<BinaryNode> elements = levelMap.get(key);
+            for (BinaryNode node : elements) {
+                depthList.append(node);
+            }
+            listOfDepths.add(depthList);
+        }
+        
+        return listOfDepths;
+    }
+
+    // Builds a map of nodes that are mapped to the "level" or "depth" inside of a binary tree.
+    private static void buildLevelMap(BinaryNode root, HashMap<Integer, List<BinaryNode>> levelMap, int level) {
+        if (root == null) return;
+        if (!levelMap.containsKey(level)) {
+            levelMap.put(level, new ArrayList<>());
+        }
+        levelMap.get(level).add(root);
+        buildLevelMap(root.left, levelMap, level+1);
+        buildLevelMap(root.right, levelMap, level+1);
     }
 }

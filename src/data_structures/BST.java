@@ -12,7 +12,7 @@ import data_structures.utils.TreePrinter;
  * @author Wayne
  * @param <AnyType>
  */
-public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
+public class BST<AnyType extends Comparable<? super AnyType>> {
     
     /**
      * The tree root.
@@ -22,8 +22,12 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
     /**
      * Construct the tree.
      */
-    public BinarySearchTree() {
+    public BST() {
         root = null;
+    }
+    
+    public BinaryNode<AnyType> getRoot() {
+        return root;
     }
 
     /**
@@ -225,7 +229,7 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
         TreePrinter.print(root);
     }
 
-    protected static class BinaryNode<T> implements PrintableNode {
+    public static class BinaryNode<T> implements PrintableNode {
 
         public T element;
         public BinaryNode<T> left;

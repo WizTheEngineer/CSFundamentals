@@ -7,9 +7,13 @@ package csfundamentals;
 
 import ctcisolutions.TreesAndGraphs;
 import data_structures.AVLTree;
-import data_structures.BinarySearchTree;
+import data_structures.BST;
+import data_structures.BST.BinaryNode;
 import data_structures.Graph;
 import data_structures.Graph.GraphNode;
+import data_structures.LinkedList;
+import data_structures.Node;
+import java.util.List;
 
 /**
  *
@@ -46,7 +50,22 @@ public class CSFundamentals {
         System.out.printf("Has path? %b\n", hasPath);
         
         int[] sortedArray = {9, 10, 11, 12, 13, 14, 20, 25, 40, 50, 60, 70};
-        BinarySearchTree<Integer> minTree = TreesAndGraphs.buildMinimalTree(sortedArray);
+        BST<Integer> minTree = TreesAndGraphs.buildMinimalTree(sortedArray);
         minTree.printPretty();
+        
+        List<LinkedList<BinaryNode>> listOfDepths = TreesAndGraphs.listOfDepths(minTree);
+        
+        int level = 1;
+        for (LinkedList<BinaryNode> list : listOfDepths) {
+            System.out.println("List of nodes at level " + level);
+            
+            Node<BinaryNode> start = list.getHead();
+            while (start != null) {
+                System.out.print(" " + start.data.getText() + " ");
+                start = start.next;
+            }
+            level++;
+            System.out.println();
+        }
     }
 }
