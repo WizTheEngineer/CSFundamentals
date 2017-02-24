@@ -41,21 +41,21 @@ public class AVLTree {
         final int balanceFactor = getBalanceFactor(parent);
         if (Math.abs(balanceFactor) > 1) {
             if (balanceFactor < 0) {
-                if (parent.left.left != null) {
-                    // LL-Inbalance
+                if (parent.left.right != null) {
+                     // LR-Inbalance
+                    parent.left = leftRotate(parent.left);
                     parent = rightRotate(parent);
                 } else {
-                    // LR-Inbalance
-                    parent.left = leftRotate(parent.left);
+                    // LL-Inbalance
                     parent = rightRotate(parent);
                 }
             } else {
-                if (parent.right.right != null) {
-                    // RR-Inbalance
-                    parent = leftRotate(parent);
-                } else {
+                if (parent.right.left != null) {
                     // RL-Inbalance
                     parent.right = rightRotate(parent.right);
+                    parent = leftRotate(parent);
+                } else {
+                    // RR-Inbalance
                     parent = leftRotate(parent);
                 }
             }
