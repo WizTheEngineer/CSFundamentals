@@ -5,303 +5,136 @@
  */
 package data_structures;
 
-import data_structures.utils.TreePrinter;
-
-/**
- *
- * @author Wayne
- * @param <T>
- */
-public class AVLTree<T> {
-
-    private AVLNode<T> root;
-
-    private static class AVLNode<T> implements PrintableNode {
-
-        private T data;
-        private int height;
-        private AVLNode<T> parent;
-        private AVLNode<T> left;
-        private AVLNode<T> right;
-
-        private AVLNode(AVLNode<T> parent, T data) {
-            this.parent = parent;
-            this.data = data;
-            height = 1;
-        }
-
-        @Override
-        public PrintableNode getLeft() {
-            return left;
-        }
-
-        @Override
-        public PrintableNode getRight() {
-            return right;
-        }
-
-        @Override
-        public String getText() {
-            return data.toString();
-        }
+public class AVLTree {
+    
+    private Node root;
+    
+    public Node insert(int data) {
+        root = insert(data, false);
+        return root;
     }
-
-    public void insert(T value) {
-        root = insert(null, root, value);
+    
+    public Node insert(int data, boolean print) {
+        root = insert(root, data, print);
+        if (print) {
+            printInorder(root);
+        }
+        return root;
     }
-
-    private AVLNode<T> insert(AVLNode<T> parent, AVLNode<T> node, T value) {
-        if (node == null) {
-            node = new AVLNode(parent, value);
-            return node;
+    
+    /**
+     * Recursive function to insert a node into a BST.
+     * @param parent
+     * @param data
+     * @param print
+     * @return 
+     */
+    private Node insert(Node parent, int data, boolean print) {
+        if (parent == null) {
+            parent = new Node(data);
+        } else if (data <= parent.data) {
+            parent.left = insert(parent.left, data, print);
         } else {
-            int comparisonResult = ((Comparable) node.data).compareTo(value);
-            if (comparisonResult > 0) {
-                node.left = insert(node, node.left, value);
-            } else {
-                node.right = insert(node, node.right, value);
-            }
-            return balanceTree(node);
-        }
-    }
-    
-    private AVLNode<T> balanceTree(AVLNode<T> node) {
-        node.height = Math.max(height(node.left), height(node.right)) + 1;
-        int heightDiff = heightDiff(node);
-        if (heightDiff < -1) {
-            if (heightDiff(node.right) > 0) {
-                node.right = rightRotate(node.right);
-                return leftRotate(node);
-            } else {
-                return leftRotate(node);
-            }
-        } else if (heightDiff > 1) {
-            if (heightDiff(node.left) < 0) {
-                node.left = leftRotate(node.left);
-                return rightRotate(node);
-            } else {
-                return rightRotate(node);
-            }
-        }
-        return node;    
-    }
-    
-    public T successor(T value) {
-        return successor(root, value);
-    }
-    
-    private T successor(AVLNode<T> node, T value) {
-        if (node == null) {
-            return null;
+            parent.right = insert(parent.right, data, print);
         }
         
-        int comparisonValue = ((Comparable) node.data).compareTo(value);
-        if (comparisonValue > 0) {
-            return successor(node.left, value);
-        } else if (comparisonValue < 0) {
-            return successor(node.right, value);
-        } else {
-            if (node.right == null && node.parent == null) {
-                return null;
-            }
-            if (node.right != null) {
-                // Return the left-most child of the right subtree
-                AVLNode<T> next = node.right;
-                while(next.left != null) {
-                    next = next.left;
-                }
-                return next.data;
-            } else {
-                AVLNode<T> next = node.parent;
-                while(next != null) {
-                    int comparison = ((Comparable) next.data).compareTo(value);
-                    if (comparison > 0) {
-                        return next.data;
-                    }
-                    next = next.parent;
-                }
-                return null;
-            }
-        }
-    }
-    
-    public T predecessor(T value) {
-        return predecessor(root, value);
-    }
-    
-    private T predecessor(AVLNode<T> node, T value) {
-        if (node == null) {
-            return null;
-        }
-        
-        int comparisonValue = ((Comparable) node.data).compareTo(value);
-        if (comparisonValue > 0) {
-            return predecessor(node.left, value);
-        } else if (comparisonValue < 0) {
-            return predecessor(node.right, value);
-        } else {
-            if (node.left != null) {
-                // Return the right-most element of the left subtree
-                AVLNode<T> next = node.left;
-                while (next.right != null) {
-                    next = next.right;
-                }
-                return next.data;
-            } else if (node.parent != null) {
-                
-                AVLNode<T> next = node.parent;
-                if (node.parent.left != null && node.parent.left.equals(node)) {
-                    // This node is a left child of it's parent and doesn't have
-                    while (next != null) {
-                        int comparison = ((Comparable) next.data).compareTo(node.data);
-                        if (comparison > 0) {
-                            next = next.parent;
-                        } else {
-                            return next.data;
-                        }
-                    }
-                    return null;
+        final int balanceFactor = getBalanceFactor(parent);
+        if (Math.abs(balanceFactor) > 1) {
+            if (balanceFactor < 0) {
+                if (parent.left.left != null) {
+                    // LL-Inbalance
+                    parent = rightRotate(parent);
                 } else {
-                    // This node is greater than it's parent and doesn't have
-                    // a left subtree so return the parents data
-                    return next.data;
+                    // LR-Inbalance
+                    parent.left = leftRotate(parent.left);
+                    parent = rightRotate(parent);
                 }
             } else {
-                return null;
+                if (parent.right.right != null) {
+                    // RR-Inbalance
+                    parent = leftRotate(parent);
+                } else {
+                    // RL-Inbalance
+                    parent.right = rightRotate(parent.right);
+                    parent = leftRotate(parent);
+                }
             }
         }
-    }
-
-    private AVLNode<T> leftRotate(AVLNode<T> n) {
-        AVLNode<T> r = n.right;
-        n.right = r.left;
-        if (r.left != null) {
-            r.left.parent = n;
-        }
-        r.left = n;
-        r.parent = n.parent;
-        n.parent = r;
-        
-        if (r.parent == null) {
-            root = r;
-        }
-        n.height = Math.max(height(n.left), height(n.right)) + 1;
-        r.height = Math.max(height(r.left), height(r.right)) + 1;
-        return r;
-    }
-
-    private AVLNode<T> rightRotate(AVLNode<T> n) {
-        AVLNode<T> r = n.left;
-        n.left = r.right;
-        if (r.right != null) {
-            r.right.parent = n;
-        }
-        r.right = n;
-        r.parent = n.parent;
-        n.parent = r;
-        
-        if (r.parent == null) {
-            root = r;
-        }
-        n.height = Math.max(height(n.left), height(n.right)) + 1;
-        r.height = Math.max(height(r.left), height(r.right)) + 1;
-        return r;
-    }
-
-    private int heightDiff(AVLNode<T> a) {
-        if (a == null) {
-            return 0;
-        }
-        return height(a.left) - height(a.right);
-    }
-
-    private int height(AVLNode<T> a) {
-        if (a == null) {
-            return 0;
-        }
-        return a.height;
+        return parent;
     }
     
-    public void printInorder() {
-        printInorder(root);
+    /**
+     * Returns the height of a given node, if null returns -1
+     * @param node
+     * @return 
+     */
+    private int getHeight(Node node) {
+        if (node == null) return -1;
+        return 1 + Math.max(getHeight(node.right), getHeight(node.left));
     }
     
-    private void printInorder(AVLNode node) {
-        if (node == null) {
-            return;
-        }
+    /**
+     * Returns the balance factor (BF) of the left and right subtrees of a given
+     * node. If BF is less than 0 the subtree is left heavy. If BF 
+     * is greater than 0 the subtree is right heavy. If BF equals 0 the subtree 
+     * is balanced.
+     * @param node
+     * @return 
+     */
+    private int getBalanceFactor(Node node) {
+        return getHeight(node.right) - getHeight(node.left);
+    }
+    
+    /**
+     * Executes a right-rotate on a node.
+     * @param node
+     * @return 
+     */
+    private Node rightRotate(Node node) {
+        System.out.printf("Right rotate node: %d\n", node.data);
+        Node left = node.left;
+        node.left = null;
+        left.right = node;
+        return left;
+    }
+    
+    /**
+     * Executes a left-rotate on a node.
+     * @param node
+     * @return 
+     */
+    private Node leftRotate(Node node) {
+        System.out.printf("Left rotate node: %d\n", node.data);
+        Node right = node.right;
+        node.right = null;
+        right.left = node;
+        return right;
+    }
+    
+    /**
+     * Prints the in-order traversal of this tree.
+     * @param node 
+     */
+    public void printInorder(Node node) {
+        if (node == null) return;
         printInorder(node.left);
-        System.out.println(node.data);
+        final int height = getHeight(node);
+        final int balanceFactor = getBalanceFactor(node);
+        System.out.printf("(data: %d, height: %d, balanceFactor: %d)\n", 
+                node.data, height, balanceFactor);
         printInorder(node.right);
     }
     
-    public void printPreorder() {
-        printPreorder(root);
-    }
-    
-    private void printPreorder(AVLNode node) {
-        if (node == null) {
-            return;
-        }
+    /**
+     * Node class for AVL Tree.
+     */
+    private class Node {
+        public int data;
+        public Node left;
+        public Node right;
         
-        System.out.println(node.getText());
-        printPreorder(node.left);
-        printPreorder(node.right);
-    }
-    
-    public void printPostorder() {
-        printPostorder(root);
-    }
-    
-    private void printPostorder(AVLNode node) {
-        if (node == null) {
-            return;
+        public Node(int data) {
+            this.data = data;
         }
-        
-        printPostorder(node.left);
-        printPostorder(node.right);
-        System.out.println(node.getText());
-    }
-    
-    public void printPretty() {
-        TreePrinter.print(root);
-    }
-    
-    public T findMin() {
-        AVLNode<T> minNode = findMin(root);
-        if (minNode != null) {
-            return minNode.data;
-        }
-        return null;
-    }
-
-    private AVLNode<T> findMin(AVLNode<T> node) {
-        if (node == null) {
-            return null;
-        }
-        
-        if (node.left != null) {
-            return findMin(node.left);
-        }
-        return node;
-    }
-    
-    public T findMax() {
-        AVLNode<T> maxNode = findMax(root);
-        if (maxNode != null) {
-            return maxNode.data;
-        }
-        return null;
-    }
-    
-    private AVLNode<T> findMax(AVLNode<T> node) {
-        if (node == null) {
-            return null;
-        }
-        
-        if (node.right != null) {
-            return findMax(node.right);
-        }
-        return node;
     }
 }
