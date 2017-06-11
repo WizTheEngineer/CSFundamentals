@@ -5,7 +5,8 @@
  */
 package csfundamentals;
 
-import data_structures.AVLTree;
+import ctcisolutions.RecursionAndDynamicProgramming;
+import java.util.ArrayList;
 
 
 /**
@@ -17,14 +18,14 @@ public class CSFundamentals {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        AVLTree tree = new AVLTree();
-        tree.insert(10);
-        tree.insert(15);
-        tree.insert(5);
-        tree.insert(20);
-        tree.insert(25);
-        tree.insert(9);
-        tree.insert(8, true);
-    }
+        public static void main(String[ ] args) {
+            int[] a = new int[] {-5, -2, 2, 4, 5, 8, 9};
+            ArrayList<Character> set = new ArrayList<>();
+            set.add('a');
+            set.add('b');
+            set.add('c');
+            ArrayList<ArrayList<Character>> powerSet = 
+                    RecursionAndDynamicProgramming.powerSet(set);
+            System.out.println("" + powerSet.size());
+        }
 }
