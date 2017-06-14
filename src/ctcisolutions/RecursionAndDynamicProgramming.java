@@ -112,4 +112,27 @@ public class RecursionAndDynamicProgramming {
         powerSet = powerSet(set, powerSet, current + 1);
         return powerSet;
     }
+    
+    // #5 Recursive Multiply (Doesn't deal with overflow, BigInteger should be used to handle overflow)
+    public static long multiply(long a, long b) {
+        long min = a < b ? a : b;
+        long max = a > b ? a : b;
+        boolean isNeg = min < 0 && max > 0;
+        long product = recursiveMultiply(Math.abs(min), Math.abs(max));
+        if (isNeg) {
+            product -= (product + product);
+        }
+        return product;
+    }
+    
+    private static long recursiveMultiply(long a, long b) {
+        if (a == 0 || b == 0) return 0;
+        long operations = 1;
+        long result = a;
+        while (operations + operations <= b) {
+            result += result;
+            operations += operations;
+        }
+        return result + recursiveMultiply(a, b - operations);
+    }
 }
