@@ -7,6 +7,9 @@ package ctcisolutions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -134,5 +137,27 @@ public class RecursionAndDynamicProgramming {
             operations += operations;
         }
         return result + recursiveMultiply(a, b - operations);
+    }
+    
+    // #7 Permutations without Dups
+    public static List<String> getPerms(String s) {
+        if (s == null) return null;
+        List<String> result = new ArrayList<>();
+        getPerms("", s, result);
+        return result;
+    }
+    
+    private static void getPerms(String prefix, String remainder, List<String> result) {
+        if (remainder.length() == 0) {
+            result.add(prefix);
+        }
+        
+        int length = remainder.length();
+        for (int i = 0; i < length; i++) {
+            String before = remainder.substring(0, i);
+            String after = remainder.substring(i + 1, length);
+            char c = remainder.charAt(i);
+            RecursionAndDynamicProgramming.getPerms(prefix + c, before + after, result);
+        }
     }
 }

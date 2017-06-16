@@ -7,6 +7,7 @@ package csfundamentals;
 
 import ctcisolutions.RecursionAndDynamicProgramming;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,9 +20,10 @@ public class CSFundamentals {
      * @param args the command line arguments
      */
         public static void main(String[ ] args) {
-            long a = -421234;
-            long b = -85345;
-            long product = RecursionAndDynamicProgramming.multiply(a, b);
-            System.out.printf("The product of %d and %d is %d\n", a, b, product);
+            String s = "dog";
+            List<String> permutations = RecursionAndDynamicProgramming.getPerms(s);
+            for (String perm : permutations) {
+                System.out.println(perm);
+            }
         }
 }
