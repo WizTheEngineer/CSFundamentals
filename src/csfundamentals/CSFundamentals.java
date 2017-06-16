@@ -6,7 +6,6 @@
 package csfundamentals;
 
 import ctcisolutions.RecursionAndDynamicProgramming;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,10 +19,9 @@ public class CSFundamentals {
      * @param args the command line arguments
      */
         public static void main(String[ ] args) {
-            String s = "dog";
-            List<String> permutations = RecursionAndDynamicProgramming.getPerms(s);
-            for (String perm : permutations) {
-                System.out.println(perm);
+            List<String> parenthesis = RecursionAndDynamicProgramming.parenthesis(5);
+            for (String paren : parenthesis) {
+                System.out.println(paren);
             }
         }
 }

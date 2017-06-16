@@ -160,4 +160,31 @@ public class RecursionAndDynamicProgramming {
             RecursionAndDynamicProgramming.getPerms(prefix + c, before + after, result);
         }
     }
+    
+    // #8 Parens
+    public static List<String> parenthesis(int n) {
+        if (n <= 0) return null;
+        char[] str = new char[n*2];
+        List<String> result = new ArrayList<>();
+        getParens(str, n, n, result, 0);
+        return result;
+    }
+    
+    private static void getParens(char[] str, int leftRemaining, int rightRemaining, List<String> result, int count) {
+        if (leftRemaining < 0 || rightRemaining < leftRemaining) return; // Error state
+        
+        if (leftRemaining == 0 && rightRemaining == 0) {
+            result.add(String.copyValueOf(str));
+        } else {
+            if (leftRemaining > 0) {
+                str[count] = '(';
+                getParens(str, leftRemaining - 1, rightRemaining, result, count + 1);
+            }
+            
+            if (rightRemaining > leftRemaining) {
+                str[count] = ')';
+                getParens(str, leftRemaining, rightRemaining - 1, result, count + 1);
+            }
+        }
+    }
 }
