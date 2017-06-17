@@ -19,9 +19,8 @@ public class CSFundamentals {
      * @param args the command line arguments
      */
         public static void main(String[ ] args) {
-            List<String> parenthesis = RecursionAndDynamicProgramming.parenthesis(5);
-            for (String paren : parenthesis) {
-                System.out.println(paren);
-            }
+            int[] coins = new int[] {25, 10, 5, 1};
+            long ways = RecursionAndDynamicProgramming.makeChange(50, coins);
+            System.out.println("" + ways);
         }
 }

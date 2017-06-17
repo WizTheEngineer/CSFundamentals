@@ -7,6 +7,7 @@ package ctcisolutions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -186,5 +187,32 @@ public class RecursionAndDynamicProgramming {
                 getParens(str, leftRemaining, rightRemaining - 1, result, count + 1);
             }
         }
+    }
+    
+    // #11 Coins
+    public static long makeChange(int amount, int[] coins) {
+        return makeChange(amount, coins, 0, new HashMap<String, Long>());
+    }
+    
+    private static long makeChange(int amount, int[] coins, int index, HashMap<String, Long> memo) {
+        if (amount == 0) {
+            return 1;
+        }
+        if (index >= coins.length) {
+            return 0;
+        }
+        final String key = String.format("%d_%d", amount, index);
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
+        
+        long ways = 0;
+        int coin = coins[index];
+        for (int i = 0; i * coin <= amount; i++) {
+            int remaining = amount - (i * coin);
+            ways += makeChange(remaining, coins, index + 1, memo);
+        }
+        memo.put(key, ways);
+        return ways;
     }
 }
