@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  *
@@ -138,6 +139,55 @@ public class RecursionAndDynamicProgramming {
             operations += operations;
         }
         return result + recursiveMultiply(a, b - operations);
+    }
+    
+    // #6 Towers of Hanoi
+    public static void towersOfHanoi(int n) {
+        final int numTowers = 3;
+        Tower[] towers = new Tower[numTowers];
+        for (int i = 0; i < numTowers; i++) {
+            towers[i] = new Tower(i);
+        }
+        
+        for (int i = n; i >= 1; i--) {
+            towers[0].add(i);
+        }
+        towers[0].moveDisks(n, towers[2], towers[1]);
+    }
+    
+    private static class Tower {
+        private final int index;
+        private Stack<Integer> disks;
+        
+        public Tower(int index) {
+            this.index = index;
+            this.disks = new Stack<>();
+        }
+        
+        public int getIndex() {
+            return index;
+        }
+        
+        public void add(int d) {
+            if (!disks.isEmpty() && disks.peek() <= d) {
+                System.out.println("Error placing disk " + d);
+            } else {
+                disks.push(d);
+            }
+        }
+        
+        public void moveTopTo(Tower t) {
+            int top = disks.pop();
+            t.add(top);
+            System.out.printf("Moving disk: %d from %d to %d\n", top, index, t.getIndex());
+        }
+        
+        public void moveDisks(int size, Tower dest, Tower aux) {
+            if (size <= 0) return;
+            moveDisks(size - 1, aux, dest);
+            moveTopTo(dest);
+            aux.moveDisks(size - 1, dest, this);
+        }
     }
     
     // #7 Permutations without Dups

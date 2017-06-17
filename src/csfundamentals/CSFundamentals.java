@@ -7,6 +7,7 @@ package csfundamentals;
 
 import ctcisolutions.RecursionAndDynamicProgramming;
 import java.util.List;
+import java.util.Stack;
 
 
 /**
@@ -19,8 +20,6 @@ public class CSFundamentals {
      * @param args the command line arguments
      */
         public static void main(String[ ] args) {
-            int[] coins = new int[] {25, 10, 5, 1};
-            long ways = RecursionAndDynamicProgramming.makeChange(50, coins);
-            System.out.println("" + ways);
+            RecursionAndDynamicProgramming.towersOfHanoi(3);
         }
 }
