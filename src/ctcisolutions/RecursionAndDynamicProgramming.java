@@ -5,6 +5,7 @@
  */
 package ctcisolutions;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -212,7 +213,7 @@ public class RecursionAndDynamicProgramming {
         }
     }
     
-    // #8 Parens
+    // #9 Parens
     public static List<String> parenthesis(int n) {
         if (n <= 0) return null;
         char[] str = new char[n*2];
@@ -236,6 +237,45 @@ public class RecursionAndDynamicProgramming {
                 str[count] = ')';
                 getParens(str, leftRemaining, rightRemaining - 1, result, count + 1);
             }
+        }
+    }
+    
+    // #10 Paint Fill
+    public static void paintFill(int[][] screen, Point p, int color) {
+        System.out.printf("\nPaint started at point(%d,%d)\n", (int) p.getX(), (int) p.getY());
+        if (screen == null) return;
+        if (screen.length == 0 || screen[0].length == 0) return;
+        HashSet<String> visited = new HashSet<>();
+        paintFill(screen, p, color, visited);
+    }
+    
+    private static void paintFill(int[][] screen, Point p, int color, HashSet<String> visited) {
+        final int row = (int) p.getY();
+        final int col = (int) p.getX();
+        if (row < 0 || row >= screen[0].length) return;
+        if (col < 0 || col >= screen.length) return;
+        final String key = String.format("%d_%d", col, row);
+        if (visited.contains(key)) return;
+        
+        // Add this pixel to the visited set
+        visited.add(key);
+        
+        // Paint this pixel
+        screen[col][row] = color;
+        
+        // Paint recursively outwards in every direction
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(col - 1, row)); // Left
+        points.add(new Point(col - 1, row - 1)); // ULeft
+        points.add(new Point(col, row - 1)); // U
+        points.add(new Point(col + 1, row - 1)); // URight
+        points.add(new Point(col + 1, row)); // Right
+        points.add(new Point(col + 1, row + 1)); // LRight
+        points.add(new Point(col, row + 1)); // L
+        points.add(new Point(col - 1, row + 1)); // LLeft
+        
+        for (Point point : points) {
+            paintFill(screen, point, color, visited);
         }
     }
     
