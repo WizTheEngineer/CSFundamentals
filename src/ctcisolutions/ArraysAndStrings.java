@@ -237,27 +237,28 @@ public class ArraysAndStrings {
     }
     
     // # 7 Rotate NxN Matrix
-    public static void rotateMatrix(int[][] matrix, int n) {
-        for (int layer = 0; layer < n / 2; ++layer) {
-            int first = layer;
-            int last = n - 1 - layer;
-            for (int i = first; i < last; ++i) {
-                int offset = i - first;
-                // save top
-                int top = matrix[first][i];
-                
-                // left -> top
-                matrix[first][i] = matrix[last-offset][first];
-                
-                // bottom -> left
-                matrix[last-offset][first] = matrix[last][last-offset];
-                
-                // right -> bottom
-                matrix[last][last-offset] = matrix[i][last];
-                
-                // top -> right
-                matrix[i][last] = top;
+    public static void rotateMatrix(int[][] m) {
+        if (m == null) throw new IllegalArgumentException("Matrix cannot be null");
+        if (m.length == 0) return;
+        if (m.length != m[0].length) throw new IllegalArgumentException("Matrix must be equal in height and length");
+        
+        int min = 0;
+        int max = m.length - 1;
+        while (min < max) {
+            for (int i = min; i < max; i++) {
+                int offset = i - min;
+                int top = m[min][i];
+                int right = m[i][max];
+                int bottom = m[max][max - offset];
+                int left = m[max - offset][min];
+                m[min][i] = left;
+                m[i][max] = top;
+                m[max][max - offset] = right;
+                m[max - offset][min] = bottom;
+                offset++;
             }
+            min++;
+            max--;
         }
     }
 }

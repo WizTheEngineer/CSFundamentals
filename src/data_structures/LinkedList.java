@@ -5,6 +5,8 @@
  */
 package data_structures;
 
+import java.util.List;
+
 /**
  *
  * @author Wayne
@@ -74,6 +76,12 @@ public class LinkedList<T> {
     
     public boolean isEmpty() {
         return head == null;
+    }
+    
+    public void addAll(List<T> collection) {
+        for (T t : collection) {
+            append(t);
+        }
     }
     
     public void print() {

@@ -5,6 +5,7 @@
  */
 package csfundamentals;
 
+import ctcisolutions.ArraysAndStrings;
 import ctcisolutions.RecursionAndDynamicProgramming;
 import java.awt.Point;
 import java.util.Arrays;
@@ -23,20 +24,19 @@ public class CSFundamentals {
      * @param args the command line arguments
      */
         public static void main(String[ ] args) {
-            runPaintAlgorithm();
-        }
-        
-        private static void runPaintAlgorithm() {
-            int[][] screen = new int[10][15];
-            for (int i = 0; i < screen.length; i++) {
-                Arrays.fill(screen[i], (int)(Math.random() * 89) + 10);
+            int[][] matrix = new int[5][5];
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[i].length; j++) {
+                    matrix[i][j] = (int) (Math.random() * 9 + 1);
+                }
             }
-            print2dArray(screen);
-            int col = (int)(Math.random() * screen.length - 1);
-            int row = (int)(Math.random() * screen[0].length - 1);
-            RecursionAndDynamicProgramming.paintFill(screen, new Point(col, row), (int)(Math.random() * 897635) + 1);
-            System.out.print("\nPainted \n\n");
-            print2dArray(screen);
+            System.out.println("-----Before Rotate------\n");
+            print2dArray(matrix);
+            System.out.print("\n\n");
+            ArraysAndStrings.rotateMatrix(matrix);
+            System.out.println("-----After Rotate------\n");
+            print2dArray(matrix);
+            System.out.println();
         }
         
         private static void print2dArray(int[][] array) {
