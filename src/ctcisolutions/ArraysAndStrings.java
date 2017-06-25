@@ -247,14 +247,12 @@ public class ArraysAndStrings {
         while (min < max) {
             for (int i = min; i < max; i++) {
                 int offset = i - min;
+                
                 int top = m[min][i];
-                int right = m[i][max];
-                int bottom = m[max][max - offset];
-                int left = m[max - offset][min];
-                m[min][i] = left;
-                m[i][max] = top;
-                m[max][max - offset] = right;
-                m[max - offset][min] = bottom;
+                m[min][i] = m[max - offset][min]; // Left -> Top
+                m[max - offset][min] = m[max][max - offset]; // Bottom -> Left
+                m[max][max - offset] = m[i][max]; // Right -> Bottom
+                m[i][max] = top; // Top -> Right
                 offset++;
             }
             min++;
