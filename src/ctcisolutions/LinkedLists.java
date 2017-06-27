@@ -6,7 +6,7 @@
 package ctcisolutions;
 
 import data_structures.LinkedList;
-import data_structures.Node;
+import data_structures.LinkedListNode;
 import data_structures.Stack;
 import java.util.HashSet;
 
@@ -22,16 +22,16 @@ public class LinkedLists {
             return;
         }
 
-        Node current = list.getHead();
+        LinkedListNode current = list.getHead();
         while (current != null) {
             removeDuplicates(current);
             current = current.next;
         }
     }
 
-    public static void removeDuplicatesFast(Node<Integer> head) {
+    public static void removeDuplicatesFast(LinkedListNode<Integer> head) {
         HashSet<Integer> set = new HashSet();
-        Node<Integer> previous = null;
+        LinkedListNode<Integer> previous = null;
         while (head != null) {
             if (set.contains(head.data)) {
                 previous.next = head.next;
@@ -43,7 +43,7 @@ public class LinkedLists {
         }
     }
 
-    private static void removeDuplicates(Node<Integer> head) {
+    private static void removeDuplicates(LinkedListNode<Integer> head) {
         int data = head.data;
         while (head != null && head.next != null) {
             if (head.next.data == data) {
@@ -54,13 +54,13 @@ public class LinkedLists {
     }
 
     // #2 Kth From Last
-    public static Node<Integer> kthFromLastElement(LinkedList<Integer> list, int k) {
+    public static LinkedListNode<Integer> kthFromLastElement(LinkedList<Integer> list, int k) {
         if (list.isEmpty()) {
             throw new IllegalArgumentException("Linked list "
                     + "cannot be empty");
         }
-        Node<Integer> current = list.getHead();
-        Node<Integer> runner = list.getHead();
+        LinkedListNode<Integer> current = list.getHead();
+        LinkedListNode<Integer> runner = list.getHead();
 
         // Position the runner k positions away from the start
         for (int i = 1; i <= k; i++) {
@@ -82,12 +82,12 @@ public class LinkedLists {
     }
 
     // #3 Delete Middle Node
-    public boolean deleteNode(Node node) {
+    public boolean deleteNode(LinkedListNode node) {
         if (node == null || node.next == null) {
             return false;
         }
 
-        Node next = node.next;
+        LinkedListNode next = node.next;
         node.data = next.data;
         node.next = next.next;
         return true;
@@ -101,12 +101,12 @@ public class LinkedLists {
         list.head = partitionMoreOptimal(list.getHead(), partitionValue);
     }
 
-    private static void partition(Node<Integer> node, int partitionValue) {
+    private static void partition(LinkedListNode<Integer> node, int partitionValue) {
         if (node == null) return;
         if (node.data >= partitionValue) {
             // Find the furthest node less than the partition
-            Node<Integer> shiftNode = node;
-            Node<Integer> current = node.next;
+            LinkedListNode<Integer> shiftNode = node;
+            LinkedListNode<Integer> current = node.next;
             while (current != null) {
                 if (current.data < partitionValue) {
                     shiftNode = current;
@@ -123,12 +123,12 @@ public class LinkedLists {
         partition(node.next, partitionValue);
     }
     
-    private static Node<Integer> partitionMoreOptimal(Node<Integer> node, int partitionValue) {
-        Node<Integer> head = node;
-        Node<Integer> tail = node;
+    private static LinkedListNode<Integer> partitionMoreOptimal(LinkedListNode<Integer> node, int partitionValue) {
+        LinkedListNode<Integer> head = node;
+        LinkedListNode<Integer> tail = node;
         
         while (node != null) {
-            Node<Integer> next = node.next;
+            LinkedListNode<Integer> next = node.next;
             if (node.data < partitionValue) {
                 node.next = head;
                 head = node;
@@ -147,8 +147,8 @@ public class LinkedLists {
     // will be done with this algorithm
     public static LinkedList<Integer> sumListReverseOrder(LinkedList<Integer> top, LinkedList<Integer> bottom) {
         if (top.isEmpty() || bottom.isEmpty()) throw new IllegalArgumentException();
-        Node<Integer> topDigit = top.getHead();
-        Node<Integer> bottomDigit = bottom.getHead();
+        LinkedListNode<Integer> topDigit = top.getHead();
+        LinkedListNode<Integer> bottomDigit = bottom.getHead();
         LinkedList<Integer> output = new LinkedList();
         
         boolean carryOne = false;
@@ -218,7 +218,7 @@ public class LinkedLists {
         
         // Calculate the length of the list (Note: This could be improved if the list keeps track of the length)
         int length = 0;
-        Node<Character> current = list.getHead();
+        LinkedListNode<Character> current = list.getHead();
         while (current != null) {
             current = current.next;
             length++;
@@ -259,10 +259,10 @@ public class LinkedLists {
     }
     
     // #7 Loop Starting Node
-    public static Node<Integer> getLoopStart(LinkedList list) {
+    public static LinkedListNode<Integer> getLoopStart(LinkedList list) {
         if (list.isEmpty()) return null;
-        Node slow = list.getHead();
-        Node fast = list.getHead();
+        LinkedListNode slow = list.getHead();
+        LinkedListNode fast = list.getHead();
         
         while (fast != null && fast.next != null) {
             slow = slow.next;

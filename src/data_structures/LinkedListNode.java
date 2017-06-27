@@ -9,11 +9,11 @@ package data_structures;
  *
  * @author Wayne
  */
-public class Node<T> {
+public class LinkedListNode<T> {
     public T data;
-    public Node<T> next;
+    public LinkedListNode<T> next;
     
-    public Node(T value) {
+    public LinkedListNode(T value) {
         this.data = value;
     }
 }

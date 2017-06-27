@@ -5,14 +5,8 @@
  */
 package csfundamentals;
 
-import ctcisolutions.ArraysAndStrings;
-import ctcisolutions.RecursionAndDynamicProgramming;
-import java.awt.Point;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Stack;
-
+import ctcisolutions.BitManipulation;
+import ctcisolutions.TreesAndGraphs.Node;
 
 /**
  *
@@ -24,19 +18,11 @@ public class CSFundamentals {
      * @param args the command line arguments
      */
         public static void main(String[ ] args) {
-            int[][] matrix = new int[5][5];
-            for (int i = 0; i < matrix.length; i++) {
-                for (int j = 0; j < matrix[i].length; j++) {
-                    matrix[i][j] = (int) (Math.random() * 9 + 1);
-                }
-            }
-            System.out.println("-----Before Rotate------\n");
-            print2dArray(matrix);
-            System.out.print("\n\n");
-            ArraysAndStrings.rotateMatrix(matrix);
-            System.out.println("-----After Rotate------\n");
-            print2dArray(matrix);
-            System.out.println();
+            int result = BitManipulation.insertion(131, 7, 3, 5);
+            double d = 0.375;
+            System.out.println("Result of insertion " + result);
+            System.out.println("The binary representation of " + d + " is "
+            + BitManipulation.binaryStringFromDouble(d));
         }
         
         private static void print2dArray(int[][] array) {
@@ -47,5 +33,11 @@ public class CSFundamentals {
                 }
                 System.out.println();
             }
+        }
+        
+        private static Node getNode(int value) {
+            Node n = new Node();
+            n.value = value;
+            return n;
         }
 }

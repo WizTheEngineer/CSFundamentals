@@ -9,8 +9,9 @@ import data_structures.BST;
 import data_structures.BST.BinaryNode;
 import data_structures.Graph.GraphNode;
 import data_structures.LinkedList;
-import data_structures.Node;
+import data_structures.LinkedListNode;
 import data_structures.Queue;
+import data_structures.Stack;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +37,7 @@ public class TreesAndGraphs {
             GraphNode node = queue.dequeue(); // Remove from the front of the queue
             if (node == destination) return true;
             visited.add(node);
-            Node<GraphNode> current = node.adjacencyList.getHead();
+            LinkedListNode<GraphNode> current = node.adjacencyList.getHead();
             while (current != null) {
                 if (!visited.contains(current.data)) {
                     visited.add(current.data);
@@ -148,5 +149,11 @@ public class TreesAndGraphs {
             System.out.printf("%d ", node.data);
             printInorder(node.right);
         }
+    }
+    
+    public static class Node {
+        public int value;
+        public Node left;
+        public Node right;
     }
 }

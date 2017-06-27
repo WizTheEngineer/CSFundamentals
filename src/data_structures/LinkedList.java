@@ -14,17 +14,17 @@ import java.util.List;
  */
 public class LinkedList<T> {
     
-    public Node<T> head;
+    public LinkedListNode<T> head;
     
-    public Node<T> append(T data) {
-        Node newNode = new Node(data);
+    public LinkedListNode<T> append(T data) {
+        LinkedListNode newNode = new LinkedListNode(data);
         
         if (head == null) {
             head = newNode;
             return head;
         }
         
-        Node current = head;
+        LinkedListNode current = head;
         while (current.next != null) {
             current = current.next;
         }
@@ -33,13 +33,13 @@ public class LinkedList<T> {
         return newNode;
     }
     
-    public Node<T> append(Node<T> node) {
+    public LinkedListNode<T> append(LinkedListNode<T> node) {
         if (head == null) {
             head = node;
             return head;
         }
         
-        Node current = head;
+        LinkedListNode current = head;
         while (current.next != null) {
             current = current.next;
         }
@@ -48,7 +48,7 @@ public class LinkedList<T> {
     }
     
     public void prepend(T data) {
-        Node newNode = new Node(data);
+        LinkedListNode newNode = new LinkedListNode(data);
         newNode.next = head;
         head = newNode;
     }
@@ -61,7 +61,7 @@ public class LinkedList<T> {
             head = head.next;
         }
         
-        Node current = head;
+        LinkedListNode current = head;
         while (current.next != null) {
             if (current.next.data == data) {
                 current.next = current.next.next;
@@ -70,7 +70,7 @@ public class LinkedList<T> {
         }
     }
     
-    public Node<T> getHead() {
+    public LinkedListNode<T> getHead() {
         return head;
     }
     
@@ -86,7 +86,7 @@ public class LinkedList<T> {
     
     public void print() {
         if (isEmpty()) return;
-        Node current = head;
+        LinkedListNode current = head;
         while (current != null) {
             System.out.print(current.data + " ");
             current = current.next;

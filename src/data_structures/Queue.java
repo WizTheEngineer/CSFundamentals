@@ -12,15 +12,15 @@ package data_structures;
  */
 public class Queue<T> {
     
-    private Node<T> head;
-    private Node<T> tail;
+    private LinkedListNode<T> head;
+    private LinkedListNode<T> tail;
     
     public boolean isEmpty() {
         return head == null;
     }
     
     public void enqueue(T data) {
-        Node node = new Node(data);
+        LinkedListNode node = new LinkedListNode(data);
         if (tail != null) {
             tail.next = node;
         }

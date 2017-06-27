@@ -48,7 +48,7 @@ public class Graph {
             return;
         }
         
-        Node<GraphNode> current = adjacencyList.getHead();
+        LinkedListNode<GraphNode> current = adjacencyList.getHead();
         while (current != null) {
             GraphNode node = current.data;
             if (!visited.contains(node)) {
@@ -71,7 +71,7 @@ public class Graph {
         while (!queue.isEmpty()) {
             GraphNode node = queue.dequeue(); // Remove from the front of the queue
             visit(node, visited);
-            Node<GraphNode> current = node.adjacencyList.getHead();
+            LinkedListNode<GraphNode> current = node.adjacencyList.getHead();
             while (current != null) {
                 if (!visited.contains(current.data)) {
                     visited.add(current.data);

@@ -11,14 +11,14 @@ package data_structures;
  * LIFO Data Structure
  */
 public class Stack<T> {
-    Node<T> top;
+    LinkedListNode<T> top;
     
     boolean isEmpty() {
         return top == null;
     }
     
     public void push(T data) {
-        Node node = new Node(data);
+        LinkedListNode node = new LinkedListNode(data);
         node.next = top;
         top = node;
     }
