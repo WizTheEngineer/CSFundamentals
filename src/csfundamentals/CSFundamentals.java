@@ -5,8 +5,8 @@
  */
 package csfundamentals;
 
-import ctcisolutions.BitManipulation;
 import ctcisolutions.TreesAndGraphs.Node;
+import interview_qs.AnagramUtils;
 
 /**
  *
@@ -14,15 +14,13 @@ import ctcisolutions.TreesAndGraphs.Node;
  */
 public class CSFundamentals {
 
+    static final String[] testArray = new String[] {"ab", "ba", "abc", "def", "bac", "defe", "cab", "bac", "ll;", "   ", ""};
+
     /**
      * @param args the command line arguments
      */
         public static void main(String[ ] args) {
-            int result = BitManipulation.insertion(131, 7, 3, 5);
-            double d = 0.375;
-            System.out.println("Result of insertion " + result);
-            System.out.println("The binary representation of " + d + " is "
-            + BitManipulation.binaryStringFromDouble(d));
+            AnagramUtils.printAnagrams(testArray);
         }
         
         private static void print2dArray(int[][] array) {
